@@ -1,4 +1,30 @@
-  import React from 'react'
+import { checkPropTypes } from 'prop-types'
+import React from 'react'
+
+  const Header = (props) =>{
+    return (
+      <div>
+        <p>Title {props.course}</p>
+      </div>
+    )
+  }
+
+  const Content = (props) => {
+    return (
+      <div>
+        <p>Part: {props.part}</p>
+        <p>number: {props.exercises}</p>
+      </div>
+    )
+  }
+
+  const Total = (props) => {
+    return (
+      <div>
+        <p>Total: {props.total}</p>
+      </div>
+    )
+  }
 
   const App = () =>{
     const course = 'Half Stack application development'
@@ -11,17 +37,12 @@
 
   return (
     <div>
-      <h1>{course}</h1>
-      <p>
-        {part1} {exercises1}
-      </p>
-      <p>
-        {part2} {exercises2}
-      </p>
-      <p>
-        {part3} {exercises3}
-      </p>
-      <p>Number of exercises {exercises1 + exercises2 + exercises3}</p>
+      <Header course = {course}/>
+      <Content part = {part1} exercises = {exercises1}/>
+      <Content part = {part2} exercises = {exercises2}/>
+      <Content part = {part3} exercises = {exercises3}/>
+      <Total total = {exercises1 + exercises2 + exercises3} />
+
     </div>
   )
 }
