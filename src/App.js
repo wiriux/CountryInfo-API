@@ -12,8 +12,7 @@ import React from 'react'
   const Content = (props) => {
     return (
       <div>
-        <p>Part: {props.part}</p>
-        <p>number: {props.exercises}</p>
+        <p>Part: {props.part}. {props.exercises} exercises</p>
       </div>
     )
   }
