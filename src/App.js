@@ -1,28 +1,14 @@
 import React, {useState} from 'react'
 
-const Display = props => <div>{props.value}</div>
-
-const Button = (props) => (
-  <button onClick = {props.handleClick}>
-    {props.text}
-  </button>
-)
-
 const App = () => {
-
-  const [value, setValue] = useState(10)
-
- const setToValue = (newValue) => {
-   setValue(newValue)
- }
-
+  //save clicks of each button to its own state
+  const [good, setGood] = useState(0)
+  const [neutral, setNeutral] = useState(0)
+  const [bad, setBad] = useState(0)
 
   return (
     <div>
-      <Display value = {value}/>
-      <button onClick = {() => setToValue(1000)}>thousand</button>
-      <button onClick = {() => setToValue(value + 1)}>increment</button>
-
+      
     </div>
   )
 }
