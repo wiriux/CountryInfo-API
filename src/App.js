@@ -22,7 +22,7 @@ const Average = (props) => {
 const PositivePercentage = (props) => {
   return(
     <div>
-      <p>Positive: {props.stats[0] / props.stats[1]}</p>
+      <p>Positive: {(props.stats[0] / props.stats[1]) * 100}</p>
     </div>
   )
 }
