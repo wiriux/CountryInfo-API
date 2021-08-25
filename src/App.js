@@ -19,6 +19,14 @@ const Average = (props) => {
   )
 }
 
+const PositivePercentage = (props) => {
+  return(
+    <div>
+      <p>Positive: {props.stats[0] / props.stats[1]}</p>
+    </div>
+  )
+}
+
 const Button = (props) =>{
   return(
     <button onClick = {props.onClick}>
@@ -54,6 +62,7 @@ const App = () => {
       <h2>Statistics</h2>
       <Display stats = {[good, neutral, bad]}/>
       <Average stats = {[(good - bad), (good + neutral + bad)]}/>
+      <PositivePercentage stats = {[(good), (good + neutral + bad)]}/>
     </div>
   )
 }
