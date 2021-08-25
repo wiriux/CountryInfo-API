@@ -1,6 +1,9 @@
 import React, {useState} from 'react'
 
 const Display = (props) =>{
+  if((props.stats[0] + props.stats[1] + props.stats[2]) === 0){
+    return <p>No feedback given</p>
+  }
   return (
     <div>
       <p>Good: {props.stats[0]} </p>
@@ -12,6 +15,9 @@ const Display = (props) =>{
 }
 
 const Average = (props) => {
+  if((props.stats[1]) === 0){
+    return null
+  }
   return(
     <div>
       <p>Average: {props.stats[0] / props.stats[1]}</p>
@@ -20,6 +26,9 @@ const Average = (props) => {
 }
 
 const PositivePercentage = (props) => {
+  if((props.stats[1]) === 0){
+    return null
+  }
   return(
     <div>
       <p>Positive: {(props.stats[0] / props.stats[1]) * 100}</p>
