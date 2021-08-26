@@ -1,37 +1,30 @@
 import React, {useState} from 'react'
 
-const Display = (props) =>{
+const StatisticLine = ({text, value}) => {
+  if (text === "positive"){
+    return <div>{text}: {value} %</div>
+
+  }
+  return(
+    <div>{text}: {value}</div>
+  )
+}
+
+const Statistics = (props) =>{
+  const totalFeedback = props.stats[0] + props.stats[1] + props.stats[2]
   if((props.stats[0] + props.stats[1] + props.stats[2]) === 0){
     return <p>No feedback given</p>
   }
   return (
     <div>
-      <p>Good: {props.stats[0]} </p>
-      <p>Neutral: {props.stats[1]}</p>
-      <p>Bad: {props.stats[2]}</p>
+      <StatisticLine text = "good" value = {props.stats[0]}/>
+      <StatisticLine text = "neutral" value = {props.stats[1]}/>
+      <StatisticLine text = "bad" value = {props.stats[2]}/>
+      <StatisticLine text = "all" value = {props.stats[0] + props.stats[1] + props.stats[2]}/>
+      <StatisticLine text = "average" value = {(props.stats[0] - props.stats[2]) / (totalFeedback)}/>
+      <StatisticLine text = "positive" value = {(props.stats[0] / totalFeedback) * 100}/>
 
-    </div>
-  )
-}
 
-const Average = (props) => {
-  if((props.stats[1]) === 0){
-    return null
-  }
-  return(
-    <div>
-      <p>Average: {props.stats[0] / props.stats[1]}</p>
-    </div>
-  )
-}
-
-const PositivePercentage = (props) => {
-  if((props.stats[1]) === 0){
-    return null
-  }
-  return(
-    <div>
-      <p>Positive: {(props.stats[0] / props.stats[1]) * 100}</p>
     </div>
   )
 }
@@ -69,9 +62,7 @@ const App = () => {
         text = "bad"
       />
       <h2>Statistics</h2>
-      <Display stats = {[good, neutral, bad]}/>
-      <Average stats = {[(good - bad), (good + neutral + bad)]}/>
-      <PositivePercentage stats = {[(good), (good + neutral + bad)]}/>
+      <Statistics stats = {[good, neutral, bad]}/>
     </div>
   )
 }
