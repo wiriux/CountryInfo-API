@@ -1,12 +1,14 @@
 import React, {useState} from 'react'
+import './index.css'
 
-const StatisticLine = ({text, value}) => {
-  if (text === "positive"){
-    return <div>{text}: {value} %</div>
-
-  }
+const StatisticLine = ({text, value, symbol}) => {
   return(
-    <div>{text}: {value}</div>
+      <table>
+        <tr>
+          <td class = "td1">{text}:</td>
+          <td>{value} {symbol}</td>
+        </tr>
+    </table>
   )
 }
 
@@ -22,7 +24,7 @@ const Statistics = (props) =>{
       <StatisticLine text = "bad" value = {props.stats[2]}/>
       <StatisticLine text = "all" value = {props.stats[0] + props.stats[1] + props.stats[2]}/>
       <StatisticLine text = "average" value = {(props.stats[0] - props.stats[2]) / (totalFeedback)}/>
-      <StatisticLine text = "positive" value = {(props.stats[0] / totalFeedback) * 100}/>
+      <StatisticLine text = "positive" value = {(props.stats[0] / totalFeedback) * 100} symbol = "%"/>
 
 
     </div>
