@@ -4,10 +4,12 @@ import './index.css'
 const StatisticLine = ({text, value, symbol}) => {
   return(
       <table>
+        <tbody>
         <tr>
-          <td class = "td1">{text}:</td>
+          <td className = "td1">{text}:</td>
           <td>{value} {symbol}</td>
         </tr>
+        </tbody>
     </table>
   )
 }
