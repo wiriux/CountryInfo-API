@@ -16,6 +16,8 @@ const App = () => {
     setNewName(event.target.value)
   }
 
+  
+
 
   return(
     <div>
@@ -32,6 +34,10 @@ const App = () => {
         <div> debug: {newName}</div>
       </form>
       <h2>Numbers</h2>
+        {persons.map(name =>
+          <div key={name.name}> {name.name}</div>
+          )} 
+
     </div>
   )
 }
