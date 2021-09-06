@@ -1,46 +1,59 @@
-import { checkPropTypes } from 'prop-types'
-import React from 'react'
+import React, {useState} from 'react'
 
-  const Header = (props) =>{
-    return (
-      <div>
-        <p>Title {props.course}</p>
-      </div>
-    )
+const App = () => {
+  const [ persons, setPersons] = useState([
+    {name: 'Arto Hellas'}
+  ])
+  const [newName, setNewName] = useState('')
+  const [newPhone, setNewPhone] = useState('')
+
+  const addName = (event) => {
+    event.preventDefault()
+    if (persons.find((person => person.name === newName))){
+      window.alert(`${newName} is already added to phonebook`)
+      setNewName('')
+    }
+    else{
+    setPersons(persons.concat({name: newName , phone: newPhone}))
+    setNewName('')
+    setNewPhone('')
+    }
   }
 
-  const Content = (props) => {
-    return (
-      <div>
-        <p>Part: {props.part}. {props.exercises} exercises</p>
-      </div>
-    )
+  const handleNameChange = (event) => {
+    console.log(event.target.value)
+    setNewName(event.target.value)
   }
 
-  const Total = (props) => {
-    return (
-      <div>
-        <p>Total: {props.total}</p>
-      </div>
-    )
+  const handlePhoneNumber = (event) => {
+    console.log(event.target.value)
+    setNewPhone(event.target.value)
   }
 
-  const App = () =>{
-    const course = 'Half Stack application development'
-    const part1 = 'Fundamentals of React'
-    const exercises1 = 10
-    const part2 = 'Using props to pass data'
-    const exercises2 = 7
-    const part3 = 'State of a component'
-    const exercises3 = 14
 
-  return (
+  return(
     <div>
-      <Header course = {course}/>
-      <Content part = {part1} exercises = {exercises1}/>
-      <Content part = {part2} exercises = {exercises2}/>
-      <Content part = {part3} exercises = {exercises3}/>
-      <Total total = {exercises1 + exercises2 + exercises3} />
+      <h2>Phonebook</h2>
+      <form onSubmit = {addName}>
+        <div>
+          name: <input 
+            value = {newName}
+            onChange = {handleNameChange}/>
+        </div>
+        <div>
+          number: <input
+            value = {newPhone}
+            onChange = {handlePhoneNumber}/>
+        </div>
+        <div>
+          <button type = "submit">add</button>
+        </div>
+        <div> debug: {newName}</div>
+      </form>
+      <h2>Numbers</h2>
+        {persons.map(name =>
+          <div key={name.name}> {name.name} {name.phone}</div>
+          )} 
 
     </div>
   )
