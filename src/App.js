@@ -76,6 +76,7 @@ const App = () => {
         </div>
       <form onSubmit = {addName}>
         <div>
+          <h2>Add a new</h2>
           name: <input 
             value = {newName}
             onChange = {handleNameChange}/>
@@ -88,7 +89,7 @@ const App = () => {
         <div>
           <button type = "submit">add</button>
         </div>
-        <div> debug: {newName}</div>
+        {/* <div> debug: {newName}</div> */}
       </form>
       <h2>Numbers</h2>
       <FindPattern pattern = {patternMatch}/>
