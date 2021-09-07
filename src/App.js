@@ -1,17 +1,17 @@
 import React, {useState} from 'react'
 
 
-const FindPattern = (props) => {
-  let filteredArray = []
-  filteredArray = props.pattern[1].filter(person => person.name.toLowerCase().includes(props.pattern[0].toLowerCase()))
+const Filter = (props) => {
+  let listOfPeople = []
+  listOfPeople = props.filterOutNames[1].filter(person => person.name.toLowerCase().includes(props.filterOutNames[0].toLowerCase()))
   //Fix this. We can't mutate state in react
-  if(props.pattern[0] === ''){
-   filteredArray = props.pattern[1]
+  if(props.filterOutNames[0] === ''){
+   listOfPeople = [...props.filterOutNames[1]]
   }
   
   return(
     <div>
-      {filteredArray.map(name =>
+      {listOfPeople.map(name =>
         <div key={name.name}> {name.name} {name.phone}</div>
         )} 
     </div>
@@ -27,7 +27,7 @@ const App = () => {
   ])
   const [newName, setNewName] = useState('')
   const [newPhone, setNewPhone] = useState('')
-  const [patternMatch, setPatternMatch] = useState('')
+  const [filterPeopleByName, setFilterPeopleByName] = useState('')
 
   const addName = (event) => {
     event.preventDefault()
@@ -54,9 +54,9 @@ const App = () => {
     setNewPhone(event.target.value)
   }
 
-  const handlePatternMatching = (event) => {
+  const handleNameFiltering = (event) => {
     console.log(event.target.value)
-    setPatternMatch(event.target.value)
+    setFilterPeopleByName(event.target.value)
   }
 
 
@@ -66,8 +66,8 @@ const App = () => {
       <h2>Phonebook</h2>
         <div>
           filter shown with: <input
-          value = {patternMatch}
-          onChange = {handlePatternMatching}/>
+          value = {filterPeopleByName}
+          onChange = {handleNameFiltering}/>
           {/* <FindPattern pattern = {patternMatch}/> */}
         </div>
       <form onSubmit = {addName}>
@@ -88,7 +88,7 @@ const App = () => {
         {/* <div> debug: {newName}</div> */}
       </form>
       <h2>Numbers</h2>
-      <FindPattern pattern = {[patternMatch, persons]}/>
+      <Filter filterOutNames = {[filterPeopleByName, persons]}/>
 
 
     </div>
