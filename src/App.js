@@ -1,5 +1,23 @@
 import React, {useState} from 'react'
 
+
+const FindPattern = (props) => {
+  let filteredArray = []
+  filteredArray = props.pattern[1].filter(person => person.name.toLowerCase().includes(props.pattern[0].toLowerCase()))
+  //Fix this. We can't mutate state in react
+  if(props.pattern[0] === ''){
+   filteredArray = props.pattern[1]
+  }
+  
+  return(
+    <div>
+      {filteredArray.map(name =>
+        <div key={name.name}> {name.name} {name.phone}</div>
+        )} 
+    </div>
+  )
+}
+
 const App = () => {
   const [persons, setPersons] = useState([
     {name: 'Arto Hellas', phone: '111'},
@@ -24,29 +42,7 @@ const App = () => {
     }
   }
 
-  const FindPattern = (props) => {
-    let filteredArray = []
-    filteredArray = persons.filter(person => person.name.toLowerCase().includes(props.pattern.toLowerCase()))
-    if(props.pattern === ''){
-     filteredArray = persons
-    }
-    
-    // *** Infinite loop below***
-
-
-    // if (persons.map(person => person.name.includes(props.pattern))) {
-    //   setPatternMatch(patternMatch.concat(props.pattern))
-    //   console.log('test')
-      
-    // }
-    return(
-      <div>
-        {filteredArray.map(name =>
-          <div key={name.name}> {name.name} {name.phone}</div>
-          )} 
-      </div>
-    )
-  }
+  
 
   const handleNameChange = (event) => {
     console.log(event.target.value)
@@ -76,6 +72,7 @@ const App = () => {
         </div>
       <form onSubmit = {addName}>
         <div>
+          <h2>Add a new</h2>
           name: <input 
             value = {newName}
             onChange = {handleNameChange}/>
@@ -88,10 +85,10 @@ const App = () => {
         <div>
           <button type = "submit">add</button>
         </div>
-        <div> debug: {newName}</div>
+        {/* <div> debug: {newName}</div> */}
       </form>
       <h2>Numbers</h2>
-      <FindPattern pattern = {patternMatch}/>
+      <FindPattern pattern = {[patternMatch, persons]}/>
 
 
     </div>
