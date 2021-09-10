@@ -1,19 +1,49 @@
 import React, {useState} from 'react'
 
-
-const Filter = (props) => {
+const NumbersForm = (props) =>{ 
   let listOfPeople = []
-  listOfPeople = props.filterOutNames[1].filter(person => person.name.toLowerCase().includes(props.filterOutNames[0].toLowerCase()))
-  //Fix this. We can't mutate state in react
-  if(props.filterOutNames[0] === ''){
-   listOfPeople = [...props.filterOutNames[1]]
-  }
+  listOfPeople = props.currentlyInPhonebook.filter(person => person.name.toLowerCase().includes(props.filteredOutPeople.toLowerCase()))
+
+  if(listOfPeople === ''){
+    listOfPeople = [...props.currentlyInPhonebook]
+   }
+
+  return (
+    <div>
+      {listOfPeople.map(name =>
+        <div key= {name.name}> {name.name} {name.phone}</div>)}
+    </div>    
+  )
+}
+
+const PersonForm = (props) => {
+  return (
+    <form onSubmit = {props.addPerson}>
+      <div>
+        name: <input
+          value = {props.valuePerson}
+          onChange = {props.onNameChange}/>
+      </div>
+      <div>
+        number: <input
+          value = {props.valuePhone}
+          onChange = {props.onNumberChange}/>
+        </div>
+        <div>
+          <button type = "submit">add</button>
+        </div>
+    </form>
+  )
+}
+
+const FilterForm = (props) => {
   
   return(
     <div>
-      {listOfPeople.map(name =>
-        <div key={name.name}> {name.name} {name.phone}</div>
-        )} 
+        Filter shown with: <input 
+         value = {props.filterPeopleByName}
+         onChange = {props.onNameFilter}
+         />
     </div>
   )
 }
@@ -64,31 +94,11 @@ const App = () => {
   return(
     <div>
       <h2>Phonebook</h2>
-        <div>
-          filter shown with: <input
-          value = {filterPeopleByName}
-          onChange = {handleNameFiltering}/>
-          {/* <FindPattern pattern = {patternMatch}/> */}
-        </div>
-      <form onSubmit = {addName}>
-        <div>
-          <h2>Add a new</h2>
-          name: <input 
-            value = {newName}
-            onChange = {handleNameChange}/>
-        </div>
-        <div>
-          number: <input
-            value = {newPhone}
-            onChange = {handlePhoneNumber}/>
-        </div>
-        <div>
-          <button type = "submit">add</button>
-        </div>
-        {/* <div> debug: {newName}</div> */}
-      </form>
+      <FilterForm filterOutNames = {filterPeopleByName} currentlyInPhonebook = {persons} onNameFilter = {handleNameFiltering}/>
+      <h2>Add a new</h2>
+      <PersonForm valuePerson = {newName} valuePhone = {newPhone} onNameChange = {handleNameChange} onNumberChange = {handlePhoneNumber} addPerson = {addName}/>
       <h2>Numbers</h2>
-      <Filter filterOutNames = {[filterPeopleByName, persons]}/>
+      <NumbersForm currentlyInPhonebook = {persons} filteredOutPeople = {filterPeopleByName}/>
 
 
     </div>
