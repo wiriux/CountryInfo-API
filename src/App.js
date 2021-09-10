@@ -10,8 +10,8 @@ const NumbersForm = (props) =>{
 
   return (
     <div>
-      {listOfPeople.map(name =>
-        <div key= {name.name}> {name.name} {name.phone}</div>)}
+      {listOfPeople.map(person =>
+        <div key= {person.name}> {person.name} {person.phone}</div>)}
     </div>    
   )
 }
