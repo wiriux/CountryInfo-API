@@ -1,0 +1,22 @@
+{
+    "notes": [
+        {
+            "id": 1,
+            "content": "HTML is easy",
+            "date": "sun sep 12 2021 08:41:40 gmt-0400 (eastern daylight time)",
+            "important": true
+        },
+        {
+            "id": 2,
+            "content": "browser can execute only javascript",
+            "date": "sun sep 12 2021 08:43:14 gmt-0400 (eastern daylight time)",
+            "important": false
+        },
+        {
+            "id": 3,
+            "content": "GET and POST are the most important methods of HTTP protocol",
+            "date": "sun sep 12 2021 08:44:06 gmt-0400 (eastern daylight time)",
+            "important": true
+        }
+    ]
+}
