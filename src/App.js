@@ -50,10 +50,7 @@ const FilterForm = (props) => {
 
 const App = () => {
   const [persons, setPersons] = useState([
-    {name: 'Arto Hellas', phone: '111'},
-    {name: 'John', phone: '222'},
-    {name: 'Daniel', phone: '333'},
-    {name: 'Pamela', phone: '444'}
+    
   ])
   const [newName, setNewName] = useState('')
   const [newPhone, setNewPhone] = useState('')

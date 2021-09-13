@@ -1,22 +1,24 @@
 {
-    "notes": [
+    "persons": [
         {
-            "id": 1,
-            "content": "HTML is easy",
-            "date": "sun sep 12 2021 08:41:40 gmt-0400 (eastern daylight time)",
-            "important": true
+            "name": "Arto Hellas",
+            "number": "000",
+            "id": 1
         },
         {
-            "id": 2,
-            "content": "browser can execute only javascript",
-            "date": "sun sep 12 2021 08:43:14 gmt-0400 (eastern daylight time)",
-            "important": false
+            "name": "ada Lovelace",
+            "number": "111",
+            "id": 2
         },
         {
-            "id": 3,
-            "content": "GET and POST are the most important methods of HTTP protocol",
-            "date": "sun sep 12 2021 08:44:06 gmt-0400 (eastern daylight time)",
-            "important": true
+            "name": "Dan Abramov",
+            "number": "222",
+            "id": 3
+        },
+        {
+            "name": "Mary Poppendieck",
+            "number": "333",
+            "id": 4
         }
     ]
 }
