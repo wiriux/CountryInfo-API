@@ -1,4 +1,5 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
+import axios from 'axios'
 
 const NumbersForm = (props) =>{ 
   let listOfPeople = []
@@ -10,8 +11,8 @@ const NumbersForm = (props) =>{
 
   return (
     <div>
-      {listOfPeople.map(name =>
-        <div key= {name.name}> {name.name} {name.phone}</div>)}
+      {listOfPeople.map(person =>
+        <div key= {person.name}> {person.name} {person.phone}</div>)}
     </div>    
   )
 }
@@ -50,14 +51,20 @@ const FilterForm = (props) => {
 
 const App = () => {
   const [persons, setPersons] = useState([
-    {name: 'Arto Hellas', phone: '111'},
-    {name: 'John', phone: '222'},
-    {name: 'Daniel', phone: '333'},
-    {name: 'Pamela', phone: '444'}
+    
   ])
   const [newName, setNewName] = useState('')
   const [newPhone, setNewPhone] = useState('')
   const [filterPeopleByName, setFilterPeopleByName] = useState('')
+
+  useEffect(() => {
+    axios
+    .get('http://localhost:3001/persons')
+    .then(response => {
+      console.log('promise fulfilled')
+      setPersons(response.data)
+    })
+  }, [])
 
   const addName = (event) => {
     event.preventDefault()
