@@ -6,24 +6,33 @@ const CountrySearch = (props) => {
   return(
     <div>
       find countries <input
-      value = {props.countryToFind}
-      onChange = {props.onCountryName}
+      value = {props.countryName}
+      onChange = {props.onCountryNameChange}
       />
     </div>
   )
 }
 
-const CountryDatabase = (props) => {
+const DesiredCountry = (props) => {
 
   let listOfCountries = []
   listOfCountries = props.countryData.filter(country => country.name.toLowerCase().includes(props.countryToFind.toLowerCase()))
   console.log('list', listOfCountries)
-  if(listOfCountries.length > 10){
+  console.log('countryToFind', props.countryToFind)
+  if(listOfCountries.length === 1){
+    <input
+      value = {props.countryToFind}
+      onChange = {props.onMyCountryNameChange}
+    />
     return(
-      <div>
-        <p>Too many matches. specify another filter</p>
-      </div>
+      null
     )
+
+  }else if (listOfCountries.length > 10){
+    return(
+      <p>Too many matches, specify another filter</p>
+    )
+
   }else{
 
     return(
@@ -35,10 +44,20 @@ const CountryDatabase = (props) => {
   }
 }
 
+const PrintDesiredCountry = (props) => {
+  console.log('my country is', props.country)
+  return(
+    <div>
+      name {props.country}
+    </div>
+  )
+}
+
 function App() {
 
   const [countries, setCountries] = useState([])
   const [countryToFind, setCountryToFind] = useState('')
+  const [myCountry, setMyCountry] = useState('')
   useEffect(() =>{
     axios
     .get('https://restcountries.eu/rest/v2/all')
@@ -53,10 +72,16 @@ function App() {
     setCountryToFind(event.target.value)
   }
 
+  const handleMyCountry = (event) => {
+    console.log(event.target.value)
+    setMyCountry(event.target.value)
+  }
+
   return (
     <div>
-      <CountrySearch countryName = {countryToFind} onCountryName = {handleCountryName}/>
-      <CountryDatabase countryData = {countries} countryToFind = {countryToFind}/>
+      <CountrySearch countryName = {countryToFind} onCountryNameChange = {handleCountryName}/>
+      <DesiredCountry countryData = {countries} countryToFind = {countryToFind} onMyCountryNameChange = {handleMyCountry}/>
+      <PrintDesiredCountry country = {myCountry}/>
     </div>
   );
 }
