@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import axios from 'axios'
+import index from './index.css'
 
 const CountrySearch = (props) => {
 
@@ -16,17 +17,27 @@ const CountrySearch = (props) => {
 const DesiredCountry = (props) => {
 
   let listOfCountries = []
+  let myCountry = []
   listOfCountries = props.countryData.filter(country => country.name.toLowerCase().includes(props.countryToFind.toLowerCase()))
   console.log('list', listOfCountries)
   console.log('countryToFind', props.countryToFind)
   if(listOfCountries.length === 1){
+    myCountry = listOfCountries;
     <input
       value = {props.countryToFind}
       onChange = {props.onMyCountryNameChange}
     />
     return(
       <div>
-        {listOfCountries.map(country => country.name)}
+        <h1><b>{myCountry[0].name}</b></h1>
+        Capital: {myCountry[0].capital}<br></br>
+        Population: {myCountry[0].population.toLocaleString()}<br></br>
+
+        <h2><b>Languages</b></h2> 
+        {myCountry.map(country => country.languages.map(languages => 
+          <div><li className = "align_languages">{languages.name}</li></div>))}
+
+        <img className="flag" src= {myCountry[0].flag}/>    
       </div>
     )
 
