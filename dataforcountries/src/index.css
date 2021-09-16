@@ -11,3 +11,15 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.align_languages{
+  padding-left: 25px;
+}
+
+.flag{
+  padding-top: 15px;
+  padding-left: 15px;
+  display: block;
+  width: 100px;
+  height: 100px;
+}

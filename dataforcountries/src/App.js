@@ -1,29 +1,51 @@
 import React, {useEffect, useState} from 'react'
 import axios from 'axios'
+import index from './index.css'
 
 const CountrySearch = (props) => {
 
   return(
     <div>
       find countries <input
-      value = {props.countryToFind}
-      onChange = {props.onCountryName}
+      value = {props.countryName}
+      onChange = {props.onCountryNameChange}
       />
     </div>
   )
 }
 
-const CountryDatabase = (props) => {
+const DesiredCountry = (props) => {
 
   let listOfCountries = []
+  let myCountry = []
   listOfCountries = props.countryData.filter(country => country.name.toLowerCase().includes(props.countryToFind.toLowerCase()))
   console.log('list', listOfCountries)
-  if(listOfCountries.length > 10){
+  console.log('countryToFind', props.countryToFind)
+  if(listOfCountries.length === 1){
+    myCountry = listOfCountries;
+    <input
+      value = {props.countryToFind}
+      onChange = {props.onMyCountryNameChange}
+    />
     return(
       <div>
-        <p>Too many matches. specify another filter</p>
+        <h1><b>{myCountry[0].name}</b></h1>
+        Capital: {myCountry[0].capital}<br></br>
+        Population: {myCountry[0].population.toLocaleString()}<br></br>
+
+        <h2><b>Languages</b></h2> 
+        {myCountry.map(country => country.languages.map(languages => 
+          <div><li className = "align_languages">{languages.name}</li></div>))}
+
+        <img className="flag" src= {myCountry[0].flag}/>    
       </div>
     )
+
+  }else if (listOfCountries.length > 10){
+    return(
+      <p>Too many matches, specify another filter</p>
+    )
+
   }else{
 
     return(
@@ -53,10 +75,11 @@ function App() {
     setCountryToFind(event.target.value)
   }
 
+
   return (
     <div>
-      <CountrySearch countryName = {countryToFind} onCountryName = {handleCountryName}/>
-      <CountryDatabase countryData = {countries} countryToFind = {countryToFind}/>
+      <CountrySearch countryName = {countryToFind} onCountryNameChange = {handleCountryName}/>
+      <DesiredCountry countryData = {countries} countryToFind = {countryToFind} />
     </div>
   );
 }
