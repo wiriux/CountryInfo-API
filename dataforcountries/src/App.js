@@ -25,7 +25,9 @@ const DesiredCountry = (props) => {
       onChange = {props.onMyCountryNameChange}
     />
     return(
-      null
+      <div>
+        {listOfCountries.map(country => country.name)}
+      </div>
     )
 
   }else if (listOfCountries.length > 10){
@@ -44,20 +46,10 @@ const DesiredCountry = (props) => {
   }
 }
 
-const PrintDesiredCountry = (props) => {
-  console.log('my country is', props.country)
-  return(
-    <div>
-      name {props.country}
-    </div>
-  )
-}
-
 function App() {
 
   const [countries, setCountries] = useState([])
   const [countryToFind, setCountryToFind] = useState('')
-  const [myCountry, setMyCountry] = useState('')
   useEffect(() =>{
     axios
     .get('https://restcountries.eu/rest/v2/all')
@@ -72,16 +64,11 @@ function App() {
     setCountryToFind(event.target.value)
   }
 
-  const handleMyCountry = (event) => {
-    console.log(event.target.value)
-    setMyCountry(event.target.value)
-  }
 
   return (
     <div>
       <CountrySearch countryName = {countryToFind} onCountryNameChange = {handleCountryName}/>
-      <DesiredCountry countryData = {countries} countryToFind = {countryToFind} onMyCountryNameChange = {handleMyCountry}/>
-      <PrintDesiredCountry country = {myCountry}/>
+      <DesiredCountry countryData = {countries} countryToFind = {countryToFind} />
     </div>
   );
 }
