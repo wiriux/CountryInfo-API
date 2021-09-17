@@ -3,17 +3,18 @@ import axios from 'axios'
 import index from './index.css'
 
 const DisplayCountry = (props) => {
+  if (!props.country) return <div></div>;
   return(
     <div>
-    <h1><b>{props.country[0].name}</b></h1>
-    Capital: {props.country[0].capital}<br></br>
-    Population: {props.country[0].population.toLocaleString()}<br></br>
+    <h1><b>{props.country.name}</b></h1>
+    Capital: {props.country.capital}<br></br>
+    Population: {props.country.population.toLocaleString()}<br></br>
 
-    <h2><b>Languages</b></h2> 
-    {props.country.map(country => country.languages.map(languages => 
-      <div><li className = "align_languages">{languages.name}</li></div>))}
+    <h2><b>Languages</b></h2>
+    {props.country.languages.map(languages =>
+      <div><li className = "align_languages">{languages.name}</li></div>)}
 
-    <img className="flag" src= {props.country[0].flag}/>   
+    <img className="flag" src= {props.country.flag}/>
   </div>
   )
 }
@@ -36,18 +37,12 @@ const DesiredCountry = (props) => {
   let myCountry = []
   listOfCountries = props.countryData.filter(country => country.name.toLowerCase().includes(props.countryToFind.toLowerCase()))
   console.log('list', listOfCountries)
+  if(props.countryToFind === ''){props.setCountryToDisplay(null)}
   if(listOfCountries.length === 1){
     myCountry = listOfCountries;
     console.log('my country', myCountry);
-    <input
-      value = {props.countryToFind}
-      onChange = {props.onMyCountryNameChange}
-    />
-    return(
-      <div>
-        <DisplayCountry country = {myCountry}/>
-      </div>
-    )
+    props.setCountryToDisplay(myCountry[0]);
+    return null
 
   }else if (listOfCountries.length > 10){
     return(
@@ -58,7 +53,7 @@ const DesiredCountry = (props) => {
 
     return(
       <div>
-        {listOfCountries.map(country => 
+        {listOfCountries.map(country =>
           <div key ={country.name}> {country.name} <button onClick = {() => props.setCountryToDisplay(country)}>show</button></div>)}
       </div>
     )
@@ -89,7 +84,6 @@ function App() {
   const handleDisplayCountry = (event) => {
     setMyCountry(event)
     console.log('event when show button is clicked:', event)
-    // DisplayCountry(getCountry)
 
   }
 
@@ -97,8 +91,10 @@ function App() {
     <div>
       <CountrySearch countryName = {countryToFind} onCountryNameChange = {handleCountryName}/>
       <DesiredCountry countryData = {countries} countryToFind = {countryToFind} setCountryToDisplay = {handleDisplayCountry}/>
+      <DisplayCountry country={country} />
     </div>
   );
 }
+
 
 export default App;
