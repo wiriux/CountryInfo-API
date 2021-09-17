@@ -2,6 +2,22 @@ import React, {useEffect, useState} from 'react'
 import axios from 'axios'
 import index from './index.css'
 
+const DisplayCountry = (props) => {
+  return(
+    <div>
+    <h1><b>{props.country[0].name}</b></h1>
+    Capital: {props.country[0].capital}<br></br>
+    Population: {props.country[0].population.toLocaleString()}<br></br>
+
+    <h2><b>Languages</b></h2> 
+    {props.country.map(country => country.languages.map(languages => 
+      <div><li className = "align_languages">{languages.name}</li></div>))}
+
+    <img className="flag" src= {props.country[0].flag}/>   
+  </div>
+  )
+}
+
 const CountrySearch = (props) => {
 
   return(
@@ -20,24 +36,16 @@ const DesiredCountry = (props) => {
   let myCountry = []
   listOfCountries = props.countryData.filter(country => country.name.toLowerCase().includes(props.countryToFind.toLowerCase()))
   console.log('list', listOfCountries)
-  console.log('countryToFind', props.countryToFind)
   if(listOfCountries.length === 1){
     myCountry = listOfCountries;
+    console.log('my country', myCountry);
     <input
       value = {props.countryToFind}
       onChange = {props.onMyCountryNameChange}
     />
     return(
       <div>
-        <h1><b>{myCountry[0].name}</b></h1>
-        Capital: {myCountry[0].capital}<br></br>
-        Population: {myCountry[0].population.toLocaleString()}<br></br>
-
-        <h2><b>Languages</b></h2> 
-        {myCountry.map(country => country.languages.map(languages => 
-          <div><li className = "align_languages">{languages.name}</li></div>))}
-
-        <img className="flag" src= {myCountry[0].flag}/>    
+        <DisplayCountry country = {myCountry}/>
       </div>
     )
 
@@ -51,7 +59,7 @@ const DesiredCountry = (props) => {
     return(
       <div>
         {listOfCountries.map(country => 
-          <div key ={country.name}> {country.name}</div>)}
+          <div key ={country.name}> {country.name} <button onClick = {() => props.setCountryToDisplay(country)}>show</button></div>)}
       </div>
     )
   }
@@ -61,6 +69,9 @@ function App() {
 
   const [countries, setCountries] = useState([])
   const [countryToFind, setCountryToFind] = useState('')
+  const [country, setMyCountry] = useState('')
+
+
   useEffect(() =>{
     axios
     .get('https://restcountries.eu/rest/v2/all')
@@ -75,11 +86,17 @@ function App() {
     setCountryToFind(event.target.value)
   }
 
+  const handleDisplayCountry = (event) => {
+    setMyCountry(event)
+    console.log('event when show button is clicked:', event)
+    // DisplayCountry(getCountry)
+
+  }
 
   return (
     <div>
       <CountrySearch countryName = {countryToFind} onCountryNameChange = {handleCountryName}/>
-      <DesiredCountry countryData = {countries} countryToFind = {countryToFind} />
+      <DesiredCountry countryData = {countries} countryToFind = {countryToFind} setCountryToDisplay = {handleDisplayCountry}/>
     </div>
   );
 }
