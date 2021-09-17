@@ -6,7 +6,7 @@ const DisplayCountry = (props) => {
   if (!props.country) return <div></div>;
   return(
     <div>
-    <h1><b>{props.country.name}</b></h1>
+    <h1><b>{props.country.name} </b></h1>
     Capital: {props.country.capital}<br></br>
     Population: {props.country.population.toLocaleString()}<br></br>
 
@@ -23,7 +23,7 @@ const CountrySearch = (props) => {
 
   return(
     <div>
-      find countries <input
+      Find countries <input
       value = {props.countryName}
       onChange = {props.onCountryNameChange}
       />
