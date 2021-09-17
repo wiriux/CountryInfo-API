@@ -93,7 +93,7 @@ function App() {
   }, [])
 
   const city = 'Papeetē'
-  const api_key = 'cf523d2f3ec2dfba9656fcce17f70aa1'
+  const api_key = process.env.REACT_APP_API_KEY
   console.log('key', api_key)
   console.log('show country:', showCountry)
   useEffect(() =>{
