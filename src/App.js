@@ -80,9 +80,6 @@ const App = () => {
         setNewName('')
         setNewPhone('')
       })
-    // setPersons(persons.concat({name: newName , phone: newPhone}))
-    // setNewName('')
-    // setNewPhone('')
     }
   }
 
