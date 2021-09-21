@@ -7,10 +7,17 @@ const getAll = () =>{
 }
 
 const create = newPerson => {
-    console.log('newPerson', newPerson)
     const request = axios.post(baseURL, newPerson)
     return request.then(response => response.data)
 
 }
 
-export default {getAll, create}
+const removePerson = (id) => {
+    const personToRemove = baseURL + '/' + id
+    const request = axios.delete(personToRemove)
+    return request.then(response => response.data)
+
+
+}
+
+export default {getAll, create, removePerson}

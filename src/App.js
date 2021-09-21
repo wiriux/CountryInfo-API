@@ -2,10 +2,10 @@ import React, {useEffect, useState} from 'react'
 import axios from 'axios'
 import phoneService from './services/phoneNumbers'
 
+
 const NumbersForm = (props) =>{ 
   let listOfPeople = []
   listOfPeople = props.currentlyInPhonebook.filter(person => person.name.toLowerCase().includes(props.filteredOutPeople.toLowerCase()))
-
   if(listOfPeople === ''){
     listOfPeople = [...props.currentlyInPhonebook]
    }
@@ -13,7 +13,7 @@ const NumbersForm = (props) =>{
   return (
     <div>
       {listOfPeople.map(person =>
-        <div key= {person.name}> {person.name} {person.phone}</div>)}
+        <div key= {person.name}> {person.name} {person.phone} <button onClick = {() => props.personToRemove([person.id, person.name])}>delete</button></div>)}
     </div>    
   )
 }
@@ -72,6 +72,8 @@ const App = () => {
     if (persons.find((person => person.name === newName))){
       window.alert(`${newName} is already added to phonebook`)
       setNewName('')
+    }else if (newName === '' || newPhone === ''){
+      window.alert(`Fields cannot be empty`)
     }
     else{
       phoneService
@@ -81,6 +83,19 @@ const App = () => {
         setNewName('')
         setNewPhone('')
         })
+    }
+  }
+
+  const removePerson = (event) => {
+    const [id, name] = event;
+    const isConfirmed = window.confirm(`Do you want to delete ${name}`);
+
+    if(isConfirmed){
+    phoneService
+      .removePerson(id)
+      .then(() => {
+      setPersons(persons.filter(person => person.id != id))
+      })
     }
   }
 
@@ -102,7 +117,6 @@ const App = () => {
   }
 
 
-
   return(
     <div>
       <h2>Phonebook</h2>
@@ -110,7 +124,7 @@ const App = () => {
       <h2>Add a new</h2>
       <PersonForm valuePerson = {newName} valuePhone = {newPhone} onNameChange = {handleNameChange} onNumberChange = {handlePhoneNumber} addPerson = {addName}/>
       <h2>Numbers</h2>
-      <NumbersForm currentlyInPhonebook = {persons} filteredOutPeople = {filterPeopleByName}/>
+      <NumbersForm currentlyInPhonebook = {persons} filteredOutPeople = {filterPeopleByName} personToRemove = {removePerson}/>
 
 
     </div>
