@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from 'react'
-import axios from 'axios'
 import phoneService from './services/phoneNumbers'
 
 
@@ -94,7 +93,7 @@ const App = () => {
     phoneService
       .removePerson(id)
       .then(() => {
-      setPersons(persons.filter(person => person.id != id))
+      setPersons(persons.filter(person => person.id !== id))
       })
     }
   }

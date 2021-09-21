@@ -20,4 +20,10 @@ const removePerson = (id) => {
 
 }
 
-export default {getAll, create, removePerson}
+const phoneService = {
+   getAll,
+   create,
+   removePerson 
+};
+
+export default phoneService;
