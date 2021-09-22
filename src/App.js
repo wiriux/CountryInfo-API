@@ -50,6 +50,18 @@ const FilterForm = (props) => {
   )
 }
 
+const Notification = ({message}) => {
+  if(message === null){
+    return null
+  }
+  return(
+    <div className="userAdded">
+      {message}
+    </div>
+  )
+}
+
+
 const App = () => {
   const [persons, setPersons] = useState([
     
@@ -57,6 +69,7 @@ const App = () => {
   const [newName, setNewName] = useState('')
   const [newPhone, setNewPhone] = useState('')
   const [filterPeopleByName, setFilterPeopleByName] = useState('')
+  const [displaySuccessMessage, setDisplaySuccessMessage] = useState(null)
 
   useEffect(() => {
     phoneService
@@ -89,7 +102,10 @@ const App = () => {
         setNewPhone('')
         })
       }
-
+      setDisplaySuccessMessage(`${newName}'s number has been updated`)
+      setTimeout(() => {
+        setDisplaySuccessMessage(null)
+    }, 2000);
     }
     else{
       phoneService
@@ -99,6 +115,11 @@ const App = () => {
         setNewName('')
         setNewPhone('')
         })
+
+        setDisplaySuccessMessage(`Added ${newName}`)
+        setTimeout(() => {
+          setDisplaySuccessMessage(null)
+      }, 2000);
     }
   }
 
@@ -136,6 +157,7 @@ const App = () => {
   return(
     <div>
       <h2>Phonebook</h2>
+      <Notification message={displaySuccessMessage}/>
       <FilterForm filterOutNames = {filterPeopleByName} currentlyInPhonebook = {persons} onNameFilter = {handleNameFiltering}/>
       <h2>Add a new</h2>
       <PersonForm valuePerson = {newName} valuePhone = {newPhone} onNameChange = {handleNameChange} onNumberChange = {handlePhoneNumber} addPerson = {addName}/>
