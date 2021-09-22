@@ -61,6 +61,18 @@ const Notification = ({message}) => {
   )
 }
 
+const ErrorNotification = ({message}) => {
+  if(message === null){
+    return null
+  }
+  return(
+    <div className="userNotFound">
+      {message}
+    </div>
+  )
+}
+
+
 
 const App = () => {
   const [persons, setPersons] = useState([
@@ -70,6 +82,7 @@ const App = () => {
   const [newPhone, setNewPhone] = useState('')
   const [filterPeopleByName, setFilterPeopleByName] = useState('')
   const [displaySuccessMessage, setDisplaySuccessMessage] = useState(null)
+  const [displayUserNotFound, setDisplayUserNotFound] = useState(null)
 
   useEffect(() => {
     phoneService
@@ -100,12 +113,20 @@ const App = () => {
         setPersons(persons.map(person => person.name !== newName? person : updateNumber))  
         setNewName('')
         setNewPhone('')
+        console.log('testing')
+        setDisplaySuccessMessage(`${newName}'s number has been updated`)
         })
-      }
-      setDisplaySuccessMessage(`${newName}'s number has been updated`)
-      setTimeout(() => {
+        .catch(error =>{
+          setDisplayUserNotFound(`${newName} has already been removed from database`)
+          setTimeout(() => {
+            setDisplayUserNotFound(null)
+        }, 2000);
+          })  
+
+        setTimeout(() => {
         setDisplaySuccessMessage(null)
     }, 2000);
+      }
     }
     else{
       phoneService
@@ -133,6 +154,12 @@ const App = () => {
       .then(() => {
       setPersons(persons.filter(person => person.id !== id))
       })
+      .catch(error =>{
+        setDisplayUserNotFound(`${newName} has already been removed from database`)
+        setTimeout(() => {
+          setDisplayUserNotFound(null)
+      }, 2000);
+      })
     }
   }
 
@@ -158,6 +185,7 @@ const App = () => {
     <div>
       <h2>Phonebook</h2>
       <Notification message={displaySuccessMessage}/>
+      <ErrorNotification message={displayUserNotFound}/>
       <FilterForm filterOutNames = {filterPeopleByName} currentlyInPhonebook = {persons} onNameFilter = {handleNameFiltering}/>
       <h2>Add a new</h2>
       <PersonForm valuePerson = {newName} valuePhone = {newPhone} onNameChange = {handleNameChange} onNumberChange = {handlePhoneNumber} addPerson = {addName}/>
