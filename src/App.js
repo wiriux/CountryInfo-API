@@ -66,13 +66,29 @@ const App = () => {
   }, [])
 
   const addName = (event) => {
+    
     event.preventDefault()
-    console.log(event)
-    if (persons.find((person => person.name === newName))){
-      window.alert(`${newName} is already added to phonebook`)
-      setNewName('')
-    }else if (newName === '' || newPhone === ''){
-      window.alert(`Fields cannot be empty`)
+    if (newName === '' || newPhone === ''){
+      return window.alert(`Fields cannot be empty`)
+    }
+
+    let getID
+    persons.find(person =>{
+      return getID = person.name === newName? person.id : null
+    })
+    if (getID !== null){
+      const isConfirmed =  window.confirm(`${newName} is already added to phonebook. Would you like to replace the old number with a new one?`)
+
+      if(isConfirmed){
+      phoneService
+        .updateNumber([getID, {name: newName, phone: newPhone}])
+        .then(updateNumber =>{
+        setPersons(persons.map(person => person.name !== newName? person : updateNumber))  
+        setNewName('')
+        setNewPhone('')
+        })
+      }
+
     }
     else{
       phoneService
@@ -87,7 +103,7 @@ const App = () => {
 
   const removePerson = (event) => {
     const [id, name] = event;
-    const isConfirmed = window.confirm(`Do you want to delete ${name}`);
+    const isConfirmed = window.confirm(`Do you want to delete ${name}?`);
 
     if(isConfirmed){
     phoneService
