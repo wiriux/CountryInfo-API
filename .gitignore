@@ -23,6 +23,6 @@ yarn-debug.log*
 yarn-error.log*
 .env
 
-/db.json
+db.json
 /package-lock.json
 /package.json
