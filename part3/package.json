@@ -11,6 +11,7 @@
   "author": "Matti",
   "license": "MIT",
   "dependencies": {
+    "ansi-regex": "^6.0.1",
     "express": "^4.17.1"
   },
   "devDependencies": {
