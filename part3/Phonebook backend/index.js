@@ -37,14 +37,35 @@ app.get('/api/persons/:id', (request, response) =>{
         response.json(note)
     }else{
         response.status(400).send( `Person with id ${id} not on database`)
+
+
     }
 })
 
 app.get('/info', (request, response) => {
     const numOfPeople = persons.length
     const date = new Date()
-    res.send(`<p>Phonebook has info for ${numOfPeople} people</p> 
+    response.send(`<p>Phonebook has info for ${numOfPeople} people</p> 
             <p>${date}</p>`)
+})
+
+app.delete('/api/persons/:id', (request, response) => {
+    const id = Number(request.params.id)
+    const noteToDelete = persons.find(person => {
+        return person.id === id? person.id : false
+    })
+    console.log('noteToDelete', noteToDelete)
+
+    if(noteToDelete){
+        persons = persons.filter(person => person.id !== id)
+        response.send(`Person with id ${id} has been deleted from database`)
+    }else{
+        response.status(404).send("Not a valid id")
+        // response.status(404).end()
+
+
+    }
+
 })
 
 const PORT = 3001
