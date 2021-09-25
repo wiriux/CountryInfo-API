@@ -1,4 +1,5 @@
 const express = require('express')
+const { on } = require('nodemon')
 const app = express()
 
 let persons = [
@@ -24,11 +25,22 @@ let persons = [
     }
 ]
 
-app.get('/api/persons', (req, res) =>{ 
-    res.json(persons)
+app.get('/api/persons', (request, response) =>{ 
+    response.json(persons)
 })
 
-app.get('/info', (req, res) => {
+app.get('/api/persons/:id', (request, response) =>{ 
+    const id = Number(request.params.id)
+    const note = persons.find(person => person.id === id)
+
+    if(note){
+        response.json(note)
+    }else{
+        response.status(400).send( `Person with id ${id} not on database`)
+    }
+})
+
+app.get('/info', (request, response) => {
     const numOfPeople = persons.length
     const date = new Date()
     res.send(`<p>Phonebook has info for ${numOfPeople} people</p> 
