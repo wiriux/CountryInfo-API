@@ -53,8 +53,15 @@ app.get('/info', (request, response) => {
 app.post('/api/persons', (request, response) => {
     const body = request.body
     console.log('body is:', body)
-    if(!body.name){
-        return response.status(400).send("Name field cannot be empty")
+    if(!body.name || !body.number){
+        return response.status(400).json({
+           error: "Name/number field cannot be empty"
+        })
+    }
+    if(persons.find(person => person.name === body.name)){
+        return response.status(400).json({
+            error: "Someone with that name already in database"
+         })
     }
 
     const note = {
