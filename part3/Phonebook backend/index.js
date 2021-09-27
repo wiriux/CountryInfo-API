@@ -1,6 +1,7 @@
 const express = require('express')
-const { on } = require('nodemon')
 const app = express()
+app.use(express.json())
+
 
 let persons = [
     {
@@ -49,6 +50,23 @@ app.get('/info', (request, response) => {
             <p>${date}</p>`)
 })
 
+app.post('/api/persons', (request, response) => {
+    const body = request.body
+    console.log('body is:', body)
+    if(!body.name){
+        return response.status(400).send("Name field cannot be empty")
+    }
+
+    const note = {
+        id: Math.floor(Math.random() * 1000000),
+        name: body.name,
+        number: body.number,
+    }
+
+    persons = persons.concat(note)
+    response.json(persons)
+})
+
 app.delete('/api/persons/:id', (request, response) => {
     const id = Number(request.params.id)
     const noteToDelete = persons.find(person => {
@@ -67,6 +85,8 @@ app.delete('/api/persons/:id', (request, response) => {
     }
 
 })
+
+
 
 const PORT = 3001
 app.listen(PORT, () => {
