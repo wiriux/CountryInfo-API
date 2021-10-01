@@ -3,17 +3,18 @@ const morgan = require('morgan')
 const app = express()
 app.use(express.json())
 
-// morgan.token("custom", function(req, res){
-//     return (
-//         "method: " + res.method + "\n" + 
-//         "url: " + res.url + "\n" +
-//         "status: " + res.status + "\n" +
-//         "response time: " + req.headers['content-length'] + "ms"
-//     )
-// })
+morgan.token("tiny", "method: :method \nurl: :url \nstatus: :status \ncontent length: :res[content-length] \nresponse time: :response-time ms\n---------------")
+morgan.token("if_POST", function(req, res){
+    // console.log('res.method', res.method)
+    if(res.method === 'POST'){
+        return console.log(res.body, "\n---------------") 
+    }
+   
+})
 
-morgan.token("custom", "method: :method \nurl: :url \nstatus: :status \ncontent length: :res[content-length] \nresponse time: :response-time ms")
-app.use(morgan('custom'))
+app.use(morgan('tiny'))
+app.use(morgan('if_POST'))
+
 
 let persons = [
     {
@@ -64,7 +65,7 @@ app.get('/info', (request, response) => {
 
 app.post('/api/persons', (request, response) => {
     const body = request.body
-    console.log('body is:', body)
+    // console.log('body is:', body)
     if(!body.name || !body.number){
         return response.status(400).json({
            error: "Name/number field cannot be empty"
