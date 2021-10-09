@@ -2,11 +2,13 @@
 
 # dependencies
 /node_modules
-/part2/frontEndNotes/frontendnotes/node_modules
+/part2/phonebook/node_modules
+/part2/frontendnotes/node_modules
 /part3/node_modules
 /part3/Phonebook Backend/node_modules
 /.pnp
 .pnp.js
+node_modules
 
 # testing
 /coverage

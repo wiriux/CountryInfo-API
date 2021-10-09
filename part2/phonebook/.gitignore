@@ -2,7 +2,7 @@
 
 # dependencies
 /node_modules
-/part2/phonebook/node_modules
+# /part2/phonebook/node_modules
 /.pnp
 .pnp.js
 
