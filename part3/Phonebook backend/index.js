@@ -1,7 +1,10 @@
 const express = require('express')
 const morgan = require('morgan')
+const cors = require('cors')
+
 const app = express()
 app.use(express.json())
+app.use(cors())
 
 morgan.token("tiny", "method: :method \nurl: :url \nstatus: :status \ncontent length: :res[content-length] \nresponse time: :response-time ms\n---------------")
 morgan.token("if_POST", function(req, res){
