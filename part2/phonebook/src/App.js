@@ -146,6 +146,7 @@ const App = () => {
 
   const removePerson = (event) => {
     const [id, name] = event;
+
     const isConfirmed = window.confirm(`Do you want to delete ${name}?`);
 
     if(isConfirmed){
