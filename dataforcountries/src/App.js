@@ -1,30 +1,32 @@
 import React, {useEffect, useState} from 'react'
 import axios from 'axios'
 import index from './index.css'
+require('dotenv').config();
 
 const DisplayCountry = (props) => {
   if (!props.country) return <div></div>;
   if(props.weather === '') return <div></div>
   console.log('weather contains:', props.weather)
+  
   return(
     <div>
     <h1><b>{props.country.name} </b></h1>
     Capital: {props.country.capital}<br></br>
-    Population: {props.country.population.toLocaleString()}<br></br>
+    {/* Population: {props.country.population.toLocaleString()}<br></br> */}
 
-    <h2><b>Languages</b></h2>
+    {/* <h2><b>Languages</b></h2>
     {props.country.languages.map(languages =>
-      <div><li className = "align_languages">{languages.name}</li></div>)}
+      <div><li className = "align_languages">{languages.name}</li></div>)} */}
+    {<h2><b>Region</b></h2>}
+    Region: {props.country.region}<br></br>  
+      
     
 
-    <img className="flag" src= {props.country.flag}/>
+    {/* <img className="flag" src= {props.country.flag}/> */}
     <h2><b>Weather in {props.weather.location.name}</b></h2>
-    Temperature: {props.weather.current.temperature} celsius
-    <img className="weather_icon" src= {props.weather.current.weather_icons[0]}/>
-    Wind: {props.weather.current.wind_speed} mph direction {props.weather.current.wind_dir}
-
-
-
+    Temperature: {props.weather.current.temp_f} Fahrenheit 
+    <img className="weather_icon" src= {props.weather.current.condition.icon}/>
+    Wind: {props.weather.current.wind_mph} mph <br></br>Direction: {props.weather.current.wind_dir}
 
 
   </div>
@@ -57,9 +59,14 @@ const DesiredCountry = (props) => {
     props.setShowCountry(myCountry[0]);
     return null
 
+  }else if (props.countryToFind === ""){
+    return(
+      <p>List is empty</p>
+    )
+
   }else if (listOfCountries.length > 10){
     return(
-      <p>Too many matches, specify another filter</p>
+      <p>Too many matches. Narrow down your search</p>
     )
 
   }else{
@@ -80,26 +87,26 @@ function App() {
   const [country, setMyCountry] = useState('')
   const [weather, setWeather] = useState('')
   const [showCountry, setShowCountry] = useState(false)
+  
 
 
 
+
+  const country_api_key = process.env.REACT_APP_COUNTRY_API
   useEffect(() =>{
     axios
-    .get('https://restcountries.eu/rest/v2/all')
+    .get(`http://api.countrylayer.com/v2/all?access_key=${country_api_key}`)
     .then(response =>{
       console.log('promise fulfilled countries')
       setCountries(response.data)
     })
   }, [])
 
-  const city = 'Papeetē'
-  const api_key = process.env.REACT_APP_API_KEY
-  console.log('key', api_key)
-  console.log('show country:', showCountry)
+  const weather_api_key = process.env.REACT_APP_WEATHER_API
   useEffect(() =>{
     if(!showCountry) {return null}
     axios
-    .get(`http://api.weatherstack.com/current?access_key=${api_key}&query=${showCountry.capital}`)
+    .get(`http://api.weatherapi.com/v1/current.json?key=${weather_api_key}&q=${showCountry.capital}`)
     .then(response =>{
       console.log('promise fulfilled weather')
       setWeather(response.data)
@@ -115,12 +122,10 @@ function App() {
 
   const handleDisplayCountry = (event) => {
     setMyCountry(event)
-    console.log('event when show button is clicked:', event)
 
   }
 
   const handleShowCountry = (event) => {
-    console.log('event for weather', event)
     setShowCountry(event)
 
   }
@@ -133,7 +138,9 @@ function App() {
   return (
     <div>
       <CountrySearch countryName = {countryToFind} onCountryNameChange = {handleCountryName}/>
-      <DesiredCountry countryData = {countries} countryToFind = {countryToFind} setCountryToDisplay = {handleDisplayCountry} setShowCountry = {handleShowCountry} setWeather = {handleSetWeather}/>
+      <DesiredCountry countryData = {countries} countryToFind = {countryToFind} setCountryToDisplay = {handleDisplayCountry} 
+        setShowCountry = {handleShowCountry} setWeather = {handleSetWeather} />
+
       <DisplayCountry country={country} weather = {weather}/>
     </div>
   );
