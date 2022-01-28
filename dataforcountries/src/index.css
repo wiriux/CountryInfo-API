@@ -13,6 +13,8 @@ code {
 }
 
 .align_languages{
+  padding-top: 25px;
+  padding-bottom: 25px;
   padding-left: 25px;
 }
 
@@ -29,4 +31,10 @@ code {
   display: block;
   width: 100px;
   height: 100px;
+}
+
+.align{
+  padding-left: 25px;
+  padding-top: 25px;
+  padding-bottom: 25px;
 }
