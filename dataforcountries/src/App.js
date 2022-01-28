@@ -9,8 +9,9 @@ const DisplayCountry = (props) => {
   console.log('weather contains:', props.weather)
   
   return(
-    <div>
+    <div className='align'>
     <h1><b>{props.country.name} </b></h1>
+    <img className="flag" src= {props.flag}/>
     Capital: {props.country.capital}<br></br>
     {/* Population: {props.country.population.toLocaleString()}<br></br> */}
 
@@ -22,7 +23,6 @@ const DisplayCountry = (props) => {
       
     
 
-    {/* <img className="flag" src= {props.country.flag}/> */}
     <h2><b>Weather in {props.weather.location.name}</b></h2>
     Temperature: {props.weather.current.temp_f} Fahrenheit 
     <img className="weather_icon" src= {props.weather.current.condition.icon}/>
@@ -36,8 +36,8 @@ const DisplayCountry = (props) => {
 const CountrySearch = (props) => {
 
   return(
-    <div>
-      Find countries <input
+    <div className="align">
+      Find Countries <input
       value = {props.countryName}
       onChange = {props.onCountryNameChange}
       />
@@ -49,32 +49,39 @@ const DesiredCountry = (props) => {
 
   let listOfCountries = []
   let myCountry = []
+  let flag = ' ';
+  let flagEndpoint = 'https://countryflagsapi.com/png/';
   listOfCountries = props.countryData.filter(country => country.name.toLowerCase().includes(props.countryToFind.toLowerCase()))
   console.log('list', listOfCountries)
+
   if(props.countryToFind === ''){props.setCountryToDisplay(null); props.setShowCountry(null);props.setWeather('') }
   if(listOfCountries.length === 1){
+    
     myCountry = listOfCountries;
     console.log('my country', myCountry);
+    flag = flagEndpoint + listOfCountries[0].alpha2Code;
     props.setCountryToDisplay(myCountry[0]);
     props.setShowCountry(myCountry[0]);
+    props.setFlag(flag);
     return null
 
   }else if (props.countryToFind === ""){
     return(
-      <p>List is empty</p>
+      <div className='align'><p>List is empty</p></div>
     )
 
   }else if (listOfCountries.length > 10){
     return(
-      <p>Too many matches. Narrow down your search</p>
+      <div className='align'><p>Too many matches. Narrow down your search</p></div>
     )
 
   }else{
 
     return(
-      <div>
+      <div className='align'>
         {listOfCountries.map(country =>
-          <div key ={country.name}> {country.name} <button onClick = {() => (props.setCountryToDisplay(country), props.setShowCountry(country))}>show</button></div>)}
+          <div key ={country.name}> {country.name} <button onClick = {() => (props.setCountryToDisplay(country), props.setShowCountry(country), 
+              props.setFlag( flagEndpoint + country.alpha2Code))}>show</button></div>)}
       </div>
     )
   }
@@ -87,6 +94,7 @@ function App() {
   const [country, setMyCountry] = useState('')
   const [weather, setWeather] = useState('')
   const [showCountry, setShowCountry] = useState(false)
+  const [flag, setFlag] = useState('')
   
 
 
@@ -135,13 +143,18 @@ function App() {
 
   }
 
+  const handleSetFlag = (event) => {
+    setFlag(event)
+
+  }
+
   return (
     <div>
       <CountrySearch countryName = {countryToFind} onCountryNameChange = {handleCountryName}/>
       <DesiredCountry countryData = {countries} countryToFind = {countryToFind} setCountryToDisplay = {handleDisplayCountry} 
-        setShowCountry = {handleShowCountry} setWeather = {handleSetWeather} />
+        setShowCountry = {handleShowCountry} setWeather = {handleSetWeather} setFlag = {handleSetFlag}/>
 
-      <DisplayCountry country={country} weather = {weather}/>
+      <DisplayCountry country={country} weather = {weather} flag = {flag}/>
     </div>
   );
 }
