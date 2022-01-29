@@ -1,6 +1,6 @@
 # CountryInfo-API
 
-A web application built with the purpose of expanding my knowledge in REST API and navigating through appropiate fields within the Json file. For this reason, I kept the front layout at a minimum. This web app is part of a larger project that I have been working on. It is unfortunate that country layer put some of the endpoints that used to be under the free tier behind a paywall. 
+A web application built with the purpose of expanding my knowledge in REST API and navigating through appropiate fields within the Json file. For this reason, I kept the front layout at a minimum. This web app is part of a larger project that I have been working on. 
 
 
 
@@ -15,7 +15,7 @@ In the project directory, you can run:
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-To authenticate: API keys (free registration) from [country layer](countrylayer.com) and [weather api](weatherapi.com) need to be put in .env file to run the program.
+To authenticate: API keys (free registration) from [country layer](countrylayer.com) and [weather api](weatherapi.com) need to be put in .env file to run the program. It is unfortunate that country layer put some of the endpoints that used to be under the free tier behind a paywall. 
 
 
 
