@@ -15,7 +15,7 @@ In the project directory, you can run:
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-To authenticate: API keys (free registration) from [country layer](countrylayer.com) and [weather api](weatherapi.com) need to be put in .env file to run the program. It is unfortunate that country layer put some of the endpoints that used to be under the free tier behind a paywall. 
+To authenticate: API keys (free registration) from [country layer](https://countrylayer.com/) and [weather api](https://www.weatherapi.com/) need to be put in .env file to run the program. It is unfortunate that country layer put some of the endpoints that used to be under the free tier behind a paywall. 
 
 
 
